@@ -4,12 +4,12 @@ import glob
 import os
 
 # Create file path to desktop
-desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+
 
 def getImages():
     """ Finds the image folder then stores their location in an array"""
     # looks for a rawImages folder on desktop
-    bmp_folder = glob.glob("{}/raw/*.bmp".format(desktop))
+    bmp_folder = glob.glob("/home/pi/Desktop/raw/*.bmp")
     cv_imgs = []
     # looks in folder and adds all files in folder to the cv_img array
     for img in bmp_folder:
@@ -24,9 +24,8 @@ def getImages():
 def createConvertedFolder():
     """checks to see if a converted folder exists. If not, creates a converted folder to store the converted images"""
     # create file path: C:\Users\DHutt\Desktop\converted-imgs
-    convertFolder = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop', 'converted')
-    if not os.path.exists(convertFolder):
-        os.makedirs(convertFolder)
+    if not os.path.exists("/home/pi/Desktop/converted"):
+        os.makedirs("/home/pi/Desktop/converted")
 
 
 def saveImages(img):
@@ -35,7 +34,7 @@ def saveImages(img):
     # captures time of image conversion in local machine time
     now = datetime.now().strftime('%H-%M-%S.%f')[:-3]
     # converts a bmp image to a jpg image and keeps 50 percent quality
-    cv2.imwrite('{}/converted/converted-{}.jpg'.format(desktop,now),img,[cv2.IMWRITE_JPEG_QUALITY,50])
+    cv2.imwrite('/home/pi/Desktop/converted/converted-{}.jpg'.format(now),img,[cv2.IMWRITE_JPEG_QUALITY,50])
     return True
     
 # if this file is the main file to run, then call getImages function
